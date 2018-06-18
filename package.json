@@ -1,0 +1,68 @@
+{
+  "name": "ts-slip32",
+  "version": "1.0.0",
+  "description": "Typescript implementation of the SLIP-0032 extended serialization format for BIP-32 wallets",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/witnet/ts-slip32.git"
+  },
+  "homepage": "https://github.com/witnet/ts-slip32#readme",
+  "bugs": {
+    "url": "https://github.com/witnet/ts-slip32/issues"
+  },
+  "author": "Mario Cao <mario@witnet.io>",
+  "license": "MIT",
+  "main": "dist/slip32.umd.js",
+  "module": "dist/slip32.es5.js",
+  "typings": "dist/slip32.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist docs",
+    "clean-deps": "rimraf node_modules",
+    "reinstall": "yarn clean-deps; yarn install",
+    "test": "jest -c jest.js test",
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs && rollup -c rollup.config.js",
+    "postbuild": "typedoc --out docs --tsconfig tsconfig.json",
+    "docs": "typedoc --out docs --tsconfig tsconfig.json",
+    "rollup": "rollup -c rollup.config.js",
+    "fmt-verify": "tsfmt --useTsfmt tsfmt.json --verify src/*.ts test/*.ts",
+    "fmt": "tsfmt --useTsfmt tsfmt.json src/*.ts test/*.ts",
+    "fmt!": "tsfmt --useTsfmt tsfmt.json -r src/*.ts test/*.ts",
+    "lint": "tslint --project tsconfig.json --force src/*.ts test/*.ts"
+  },
+  "keywords": [
+    "bip32",
+    "bitcoin",
+    "witnet",
+    "satoshilabs",
+    "hd-wallet",
+    "bech32",
+    "blockchain",
+    "slip-0032",
+    "slip32"
+  ],
+  "devDependencies": {
+    "@types/jest": "^23.0.2",
+    "bech32": "^1.1.3",
+    "jest": "^23.1.0",
+    "rollup": "^0.60.4",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^3.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.2.1",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.15.0",
+    "secp256k1": "^3.5.0",
+    "source-map-support": "^0.5.6",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.10.0",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.9.1",
+    "typescript-formatter": "^7.2.2"
+  }
+}
