@@ -1,0 +1,27 @@
+sudo: false
+
+language: node_js
+
+node_js:
+- 8
+- 9
+- 10
+
+cache:
+  yarn: true
+  directories:
+  - node_modules
+  - app/node_modules
+
+before_install: yarn global add greenkeeper-lockfile@1
+
+install:
+- yarn
+
+before_script:
+- greenkeeper-lockfile-update
+
+script:
+- yarn travis
+
+after_script: greenkeeper-lockfile-upload

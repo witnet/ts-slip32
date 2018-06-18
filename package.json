@@ -31,7 +31,8 @@
     "fmt-verify": "tsfmt --useTsfmt tsfmt.json --verify src/*.ts test/*.ts",
     "fmt": "tsfmt --useTsfmt tsfmt.json src/*.ts test/*.ts",
     "fmt!": "tsfmt --useTsfmt tsfmt.json -r src/*.ts test/*.ts",
-    "lint": "tslint --project tsconfig.json --force src/*.ts test/*.ts"
+    "lint": "tslint --project tsconfig.json --force src/*.ts test/*.ts",
+    "travis": "yarn lint && yarn fmt-verify && yarn test && yarn build"
   },
   "keywords": [
     "bip32",
