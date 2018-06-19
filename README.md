@@ -1,6 +1,6 @@
 <h1>ts-slip32</h1>
 
-<div align="center">
+<div>
     <a href="https://gitter.im/witnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/witnet/community.svg" alt="Join the chat at https://gitter.im/witnet/community"/></a>
     <a href="https://travis-ci.org/witnet/ts-slip32"><img src="https://travis-ci.org/witnet/ts-slip32.svg?branch=master" alt="Build Status" /></a>
     <a href="https://github.com/witnet/ts-slip32/blob/master/LICENSE"><img src="https://img.shields.io/github/license/witnet/ts-slip32.svg" alt="MIT" /></a>
