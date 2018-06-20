@@ -13,32 +13,56 @@ const libraryName = "slip32"
 
 const production = !process.env.ROLLUP_WATCH
 
-export default {
+export default [
+  {
     input: `src/${libraryName}.ts`,
-    output: [
-        {file: pkg.main, name: libraryName, format: "umd", sourcemap: true},
-        {file: pkg.module, format: "es", sourcemap: true},
-    ],
-    // Indicate here external modules you don"t wanna include in your bundle (i.e.: "lodash")
-    external: [],
-    watch: {
-        include: "src/**",
+    output: {
+      name: libraryName,
+      file: `dist/${libraryName}.browser.js`,
+      format: "iife",
+      sourcemap: true
     },
     plugins: [
-        json(),
-        commonjs(),
-        globals(),
-        builtins(),
-        typescript({
-            useTsconfigDeclarationDir: true
-        }),
-        resolve({
-            main: true,
-            jsnext: true,
-            browser: true,
-            preferBuiltins: false,
-        }), // tells Rollup how to find date-fns in node_modules
-        sourceMaps(),
-        production && terser()
-    ],
-}
+      json(),
+      commonjs(),
+      globals(),
+      builtins(),
+      typescript({
+        useTsconfigDeclarationDir: true
+      }),
+      resolve({
+        main: true,
+        jsnext: true,
+        browser: true,
+        preferBuiltins: false,
+      }),
+      sourceMaps(),
+      production && terser()
+    ]
+  },
+  {
+    input: `src/${libraryName}.ts`,
+    output: {
+      name: libraryName,
+      file: pkg.module,
+      format: "cjs",
+      sourcemap: true
+    },
+    plugins: [
+      json(),
+      commonjs(),
+      globals(),
+      builtins(),
+      typescript({
+        useTsconfigDeclarationDir: true
+      }),
+      resolve({
+        main: true,
+        jsnext: true,
+        preferBuiltins: false,
+      }),
+      sourceMaps(),
+      production && terser()
+    ]
+  },
+]
