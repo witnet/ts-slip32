@@ -1,4 +1,4 @@
-import * as slip32 from "../src/slip32"
+import * as Slip32 from "../src/slip32"
 import { KeyPath } from "../src/types"
 import * as Bech32 from "bech32"
 
@@ -7,7 +7,7 @@ import * as fixtures from "./fixtures"
 describe(`Bech32 lib: decode valid inputs  (${fixtures.bech32.valid.length} test vectors)`, () => {
   fixtures.bech32.valid.forEach((item, index) => {
     it(`should decode bech32 (${index + 1}, string: ${cropString(item.string, 20)})`, () => {
-      const decodedStr = slip32.decode(item.string)
+      const decodedStr = Slip32.decode(item.string)
       expect(decodedStr.hrp).toEqual(item.hrp)
       expect(decodedStr.bytes).toEqual(Bech32.fromWords(new Uint8Array(item.words)))
     })
@@ -20,7 +20,7 @@ describe(`Bech32 lib: encode valid inputs  (${fixtures.bech32.valid.length} test
         const numberArray = Bech32.fromWords(new Uint8Array(item.words))
         const buffer = new Uint8Array(numberArray.length)
         buffer.set(numberArray)
-        const encodedStr: string = slip32.encode({
+        const encodedStr: string = Slip32.encode({
           hrp: item.hrp,
           bytes: buffer
         })
@@ -31,22 +31,22 @@ describe(`Bech32 lib: encode valid inputs  (${fixtures.bech32.valid.length} test
 describe("Bech32 lib: decode invalid inputs " +
   `(${fixtures.bech32.invalid.decode.length} test vectors)`, () => {
     fixtures.bech32.invalid.decode.forEach((item, index) => {
-      it("should not decode invalid bech32" + ` (${index + 1}, ${item.exception})`, () => {
-        expect(() => slip32.decode(item.string)).toThrow()
+      it("should not decode invalid Bech32" + ` (${index + 1}, ${item.exception})`, () => {
+        expect(() => Slip32.decode(item.string)).toThrow()
       })
     })
   })
 describe("Bech32 lib: encode invalid inputs " +
   `(${fixtures.bech32.invalid.encode.length} test vectors)`, () => {
     fixtures.bech32.invalid.encode.forEach((item, index) => {
-      it("should not encode invalid bech32" + ` (${index + 1}, exception: ${item.exception})`,
+      it("should not encode invalid Bech32" + ` (${index + 1}, exception: ${item.exception})`,
         () => {
           //const numberArray = fromWords(item.words)
           const buffer = new ArrayBuffer(item.words.length)
           const numberArray = new Uint8Array(buffer, 0, item.words.length)
           expect(() => {
             numberArray.set(Bech32.fromWords(new Uint8Array(item.words)))
-            slip32.encode({ hrp: item.hrp, bytes: numberArray })
+            Slip32.encode({ hrp: item.hrp, bytes: numberArray })
           }).toThrow()
         })
     })
@@ -54,16 +54,16 @@ describe("Bech32 lib: encode invalid inputs " +
 
 describe("Slip32 key exchange: maximum data length", () => {
   it("should have a limit set to 1086 bytes", () => {
-    expect(slip32.computeSlip32Limit()).toEqual(1086)
+    expect(Slip32.computeSlip32Limit()).toEqual(1086)
   })
 })
 
 describe(`Slip32 key exchange: import private key (${fixtures.slip32.valid.length} test vectors)`,
   () => {
     fixtures.slip32.valid.forEach((item, index) => {
-      it("should import private key from slip32 " +
+      it("should import private key from Slip32 " +
         `(${index + 1}, key: ${cropString(item.prvBech32, 15, true)})`, () => {
-          const importedKey = slip32.importKeyFromSlip32(item.prvBech32)
+          const importedKey = Slip32.importKeyFromSlip32(item.prvBech32)
           // Compare key path
           const keyPath = keyPathFromString(item.keyPath)
           expect(importedKey.keyPath).toEqual(keyPath)
@@ -77,9 +77,9 @@ describe(`Slip32 key exchange: import private key (${fixtures.slip32.valid.lengt
 describe(`Slip32 key exchange: import public key (${fixtures.slip32.valid.length} test vectors)`,
   () => {
     fixtures.slip32.valid.forEach((item, index) => {
-      it("should import public key from slip32 " +
+      it("should import public key from Slip32 " +
         `(${index + 1}, key: ${cropString(item.pubBech32, 15, true)})`, () => {
-          const importedKey = slip32.importKeyFromSlip32(item.pubBech32)
+          const importedKey = Slip32.importKeyFromSlip32(item.pubBech32)
           // Compare key path
           const keyPath = keyPathFromString(item.keyPath)
           expect(importedKey.keyPath).toEqual(keyPath)
@@ -93,12 +93,12 @@ describe(`Slip32 key exchange: import public key (${fixtures.slip32.valid.length
 describe(`Slip32 key exchange: export private key (${fixtures.slip32.valid.length} test vectors)`,
   () => {
     fixtures.slip32.valid.forEach((item, index) => {
-      it("should export private key as slip32 " +
+      it("should export private key as Slip32 " +
         `(${index + 1}, hex: ${cropString(item.prvHex, 15, true)})`, () => {
           const keyPath = keyPathFromString(item.keyPath)
           const { key, chainCode } = getKeysFromHex(item.prvHex)
-          const extendedKey = slip32.extendKey({ type: "private", bytes: key }, chainCode)
-          const exportedKey = slip32.exportKeyToSlip32(keyPath, extendedKey)
+          const extendedKey = Slip32.extendKey({ type: "private", bytes: key }, chainCode)
+          const exportedKey = Slip32.exportKeyToSlip32(keyPath, extendedKey)
           expect(exportedKey).toEqual(item.prvBech32)
         })
     })
@@ -106,12 +106,12 @@ describe(`Slip32 key exchange: export private key (${fixtures.slip32.valid.lengt
 describe(`Slip32 key exchange: export public key (${fixtures.slip32.valid.length} test vectors)`,
   () => {
     fixtures.slip32.valid.forEach((item, index) => {
-      it("should export public key as slip32 " +
+      it("should export public key as Slip32 " +
         `(${index + 1}, hex: ${cropString(item.pubHex, 15, true)})`, () => {
           const keyPath = keyPathFromString(item.keyPath)
           const { key, chainCode } = getKeysFromHex(item.pubHex)
-          const extendedKey = slip32.extendKey({ type: "public", bytes: key }, chainCode)
-          const exportedKey = slip32.exportKeyToSlip32(keyPath, extendedKey)
+          const extendedKey = Slip32.extendKey({ type: "public", bytes: key }, chainCode)
+          const exportedKey = Slip32.exportKeyToSlip32(keyPath, extendedKey)
           expect(exportedKey).toEqual(item.pubBech32)
         })
     })
