@@ -79,11 +79,11 @@ export const encode = ({ hrp, bytes }: PrefixedBuffer): string => {
 /**
  * Export key to slip32 format
  * @param {KeyPath} keyPath
- * @param {ExtendedKey<PrivateKey> | ExtendedKey<PublicKey>} extKey
+ * @param {ExtendedKey<PrivateKey> | ExtendedKey<PublicKey>} extendedKey
  * @returns {string}
  */
 export const exportKeyToSlip32 =
-  (keyPath: KeyPath, extKey: ExtendedKey<PrivateKey | PublicKey>): string => {
+  (keyPath: KeyPath, extendedKey: ExtendedKey<PrivateKey | PublicKey>): string => {
 
     // ArrayBuffer to store all bytes
     const expectedLength = getExpectedDataLength(keyPath.length)
@@ -101,19 +101,19 @@ export const exportKeyToSlip32 =
     // ChainCode (offset: depth + keyPath, length: 32 bytes)
     const chainCodeOffset = DEPTH_LENGTH + keyPath.length * KEYPATH_LENGTH
     const chainCodeView = new DataView(buffer, chainCodeOffset, CHAINCODE_LENGTH)
-    extKey.chainCode.forEach((byte, index) => {
+    extendedKey.chainCode.forEach((byte, index) => {
       chainCodeView.setUint8(index, byte)
     })
 
     // Key (offset: depth + keyPath + chainCode, length: 33 bytes)
     const keyView = new DataView(buffer, chainCodeOffset + CHAINCODE_LENGTH, KEY_LENGTH)
-    extKey.key.bytes.forEach((byte, index) => {
+    extendedKey.key.bytes.forEach((byte, index) => {
       keyView.setUint8(index, byte)
     })
 
     // Encode hrp + bytes
     const bytes = new Uint8Array(buffer)
-    if (extKey.key.type === "private") {
+    if (extendedKey.key.type === "private") {
       return encode({ hrp: "xprv", bytes })
     } else {
       return encode({ hrp: "xpub", bytes })
