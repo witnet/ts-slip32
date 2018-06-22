@@ -25,7 +25,7 @@ yarn build
 
 ## Usage
 
-Extracted from `slip32.d.ts`:
+The main two functions are described in `slip32.d.ts`:
 ```typescript
 /**
  * Import key from Slip32 format
@@ -46,7 +46,7 @@ export declare const importKeyFromSlip32: (slip32: string) => {
 export declare const exportKeyToSlip32: (keyPath: number[], extendedKey: ExtendedKey<PrivateKey | PublicKey>) => string;
 ```
 
-The aforementioned functions use the following interfaces and types:
+The aforementioned functions use the following interfaces and types, defined in `keys.d.ts`:
 
 ```typescript
 /**

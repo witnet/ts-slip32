@@ -1,6 +1,6 @@
 {
   "name": "slip32",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typescript implementation of the SLIP-0032 extended serialization format for BIP-32 wallets",
   "repository": {
     "type": "git",

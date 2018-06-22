@@ -1,4 +1,4 @@
-import { ExtendedKey, KeyPath, PrivateKey, PublicKey } from "./types"
+import { ExtendedKey, KeyPath, PrivateKey, PublicKey } from "./keys"
 import { privateKeyVerify, publicKeyVerify } from "secp256k1/lib/js"
 import * as Bech32 from "bech32"
 

@@ -1,5 +1,5 @@
 import * as Slip32 from "../src/slip32"
-import { KeyPath } from "../src/types"
+import { KeyPath } from "../src/keys"
 import * as Bech32 from "bech32"
 
 import * as fixtures from "./fixtures"
